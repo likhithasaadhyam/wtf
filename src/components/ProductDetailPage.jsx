@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { productColors, garments } from '../data/garments'
+import { productColors, garments, getProductGallery } from '../data/garments'
 import { GarmentViewer3D } from './GarmentViewer3D'
 import { ProductCard } from './ProductCard'
 
@@ -7,26 +7,37 @@ export function ProductDetailPage({ garment }) {
   const [selectedColor, setSelectedColor] = useState(garment.defaultColor || garment.colors[0])
   const [selectedSize, setSelectedSize] = useState('M')
   const [activeAngle, setActiveAngle] = useState('front')
-  const [mode, setMode] = useState('3d') // 3D viewer is default on Product Detail Page
+  const [mode, setMode] = useState('gallery') // Default to Lookbook Gallery on Product Detail Page
   const [autoRotate, setAutoRotate] = useState(false)
   const [zoom, setZoom] = useState(1.0)
   const [wireframe, setWireframe] = useState(false)
 
+
+
+  const gallery = getProductGallery(garment)
+
   const activeColorHex =
     productColors.find((c) => c.name === selectedColor)?.value || '#24262a'
 
-  const angles = ['front', 'back', 'left', 'right']
+  const angles = [
+    { id: 'front', label: 'FRONT', desc: 'Chest Emblem & Front View' },
+    { id: 'back', label: 'BACK', desc: 'Distressed Back Typography & Art' },
+    { id: 'left', label: 'LEFT', desc: 'Left Profile & Sleeve Artwork' },
+    { id: 'right', label: 'RIGHT', desc: 'Right Profile & Construction Seams' },
+  ]
+
+  const angleKeys = angles.map((a) => a.id)
 
   const handlePrevAngle = () => {
-    const currentIndex = angles.indexOf(activeAngle)
-    const prevIndex = (currentIndex - 1 + angles.length) % angles.length
-    setActiveAngle(angles[prevIndex])
+    const currentIndex = angleKeys.indexOf(activeAngle)
+    const prevIndex = (currentIndex - 1 + angleKeys.length) % angleKeys.length
+    setActiveAngle(angleKeys[prevIndex])
   }
 
   const handleNextAngle = () => {
-    const currentIndex = angles.indexOf(activeAngle)
-    const nextIndex = (currentIndex + 1) % angles.length
-    setActiveAngle(angles[nextIndex])
+    const currentIndex = angleKeys.indexOf(activeAngle)
+    const nextIndex = (currentIndex + 1) % angleKeys.length
+    setActiveAngle(angleKeys[nextIndex])
   }
 
   const relatedGarments = garments
@@ -38,33 +49,14 @@ export function ProductDetailPage({ garment }) {
     })
     .slice(0, 4)
 
-  const isLight = selectedColor === 'Off-White'
-  const getAngleGraphic = (angle) => {
-    switch (angle) {
-      case 'front':
-        return isLight
-          ? garment.graphics?.front?.replace('.png', '_dark.png') || garment.graphics?.front
-          : garment.graphics?.front
-      case 'back':
-        return isLight
-          ? garment.graphics?.back?.replace('.png', '_dark.png') || garment.graphics?.back
-          : garment.graphics?.back
-      case 'left':
-        return isLight
-          ? garment.graphics?.sleeveLeft?.replace('.png', '_dark.png') || garment.graphics?.sleeveLeft
-          : garment.graphics?.sleeveLeft
-      case 'right':
-        return isLight
-          ? garment.graphics?.sleeveRight?.replace('.png', '_dark.png') || garment.graphics?.sleeveRight
-          : garment.graphics?.sleeveRight
-      default:
-        return garment.graphics?.front
-    }
-  }
+  // Current view image path & view status
+  const currentViewImage = gallery[activeAngle] || gallery.front || garment.image
+  const currentViewStatus = gallery.viewsStatus?.[activeAngle] || 'verified'
+  const isSchematicView = currentViewStatus === 'schematic'
 
   return (
     <div className="product-page" id="detail">
-      {/* Top Navigation */}
+      {/* Top Navigation Bar */}
       <div className="detail-top-bar">
         <a className="detail-back-link" href="#collection">
           ← BACK TO COLLECTION
@@ -72,24 +64,24 @@ export function ProductDetailPage({ garment }) {
         <div className="detail-mode-toggle" role="group" aria-label="Viewer Mode">
           <button
             type="button"
+            className={`mode-btn${mode === 'gallery' ? ' is-active' : ''}`}
+            onClick={() => setMode('gallery')}
+          >
+            LOOKBOOK GALLERY
+          </button>
+          <button
+            type="button"
             className={`mode-btn${mode === '3d' ? ' is-active' : ''}`}
             onClick={() => setMode('3d')}
           >
             INTERACTIVE 3D
-          </button>
-          <button
-            type="button"
-            className={`mode-btn${mode === 'photo' ? ' is-active' : ''}`}
-            onClick={() => setMode('photo')}
-          >
-            LOOKBOOK PHOTO
           </button>
         </div>
       </div>
 
       {/* Main Product Showcase Grid */}
       <section className="detail-showcase-grid">
-        {/* Left Column: Product Stage with Arrows & Thumbnails */}
+        {/* Left Column: Product Stage with Arrows & Synchronized Thumbnails */}
         <div className="detail-visual-stage">
           <div className="detail-stage-wrapper">
             {/* Left Nav Arrow */}
@@ -103,14 +95,44 @@ export function ProductDetailPage({ garment }) {
             </button>
 
             {/* Central Stage Display */}
-            {mode === '3d' ? (
+            {mode === 'gallery' ? (
+              <div className="detail-photo-container">
+                <img
+                  key={`${garment.id}-${activeAngle}`}
+                  src={currentViewImage}
+                  alt={`${garment.name} ${activeAngle.toUpperCase()} view`}
+                  className="detail-photo-main"
+                  onError={(e) => {
+                    // Graceful fallback to verified primary image if specific view fails
+                    if (e.target.src !== garment.image) {
+                      e.target.src = garment.image
+                    }
+                  }}
+                />
+
+                {/* View Badge: Informs user if this angle is an Atelier Schematic */}
+                {isSchematicView && (
+                  <div className="detail-schematic-pill">
+                    <span className="schematic-pill__indicator">●</span>
+                    <span>ATELIER ARCHIVE SCHEMATIC // TECHNICAL BLUEPRINT</span>
+                  </div>
+                )}
+
+                {/* Bottom Caption Overlay */}
+                <div className="detail-photo-caption">
+                  <span className="caption-garment">{garment.name}</span>
+                  <span className="caption-angle">// {activeAngle.toUpperCase()} VIEW</span>
+                  <span className="caption-color">// {selectedColor.toUpperCase()}</span>
+                </div>
+              </div>
+            ) : (
               <div className="detail-canvas-container">
                 <GarmentViewer3D
                   garment={garment}
                   color={activeColorHex}
                   view={activeAngle}
                   onViewChange={setActiveAngle}
-                  scale={0.84}
+                  scale={1.12}
                   autoRotate={autoRotate}
                   showWireframe={wireframe}
                   zoomLevel={zoom}
@@ -160,18 +182,6 @@ export function ProductDetailPage({ garment }) {
                   )}
                 </div>
               </div>
-            ) : (
-              <div className="detail-photo-container">
-                <img
-                  src={garment.image}
-                  alt={`${garment.name} ${selectedColor} campaign photoshoot`}
-                  className="detail-photo-main"
-                />
-                <div className="detail-photo-caption">
-                  <span>{garment.name}</span>
-                  <span>CAMPAIGN EDITORIAL // {selectedColor.toUpperCase()}</span>
-                </div>
-              </div>
             )}
 
             {/* Right Nav Arrow */}
@@ -185,36 +195,43 @@ export function ProductDetailPage({ garment }) {
             </button>
           </div>
 
-          {/* 4-Angle Synchronized Angle Strip */}
+          {/* 4-Angle Synchronized Thumbnail Strip */}
           <div className="detail-angle-thumbnails" role="group" aria-label="Garment 4 Angles">
-            {[
-              { id: 'front', label: 'FRONT', desc: 'Chest Emblem' },
-              { id: 'back', label: 'BACK', desc: 'Headline & Art' },
-              { id: 'left', label: 'LEFT', desc: 'Radar Coordinates' },
-              { id: 'right', label: 'RIGHT', desc: 'Sleeve Branding' },
-            ].map((angle) => {
-              const graphicUrl = getAngleGraphic(angle.id)
+            {angles.map((angle) => {
+              const thumbUrl = gallery[angle.id] || gallery.front || garment.image
+              const isSelected = activeAngle === angle.id
+              const isSchematic = gallery.viewsStatus?.[angle.id] === 'schematic'
+
               return (
                 <button
                   key={angle.id}
                   type="button"
-                  className={`detail-thumb-card${activeAngle === angle.id ? ' is-selected' : ''}`}
+                  className={`detail-thumb-card${isSelected ? ' is-selected' : ''}`}
                   onClick={() => setActiveAngle(angle.id)}
-                  aria-pressed={activeAngle === angle.id}
-                  title={`View ${angle.label} (${angle.desc})`}
+                  aria-pressed={isSelected}
+                  title={`View ${angle.label} — ${angle.desc}`}
                 >
-                  <div className="detail-thumb-img-wrap" style={{ backgroundColor: isLight ? '#eae4d8' : '#14161a' }}>
-                    {graphicUrl ? (
-                      <img
-                        src={graphicUrl}
-                        alt={`${garment.name} ${angle.label} Artwork`}
-                        style={{ objectFit: 'contain', padding: '6px' }}
-                      />
-                    ) : (
-                      <span style={{ fontSize: '11px', color: '#888' }}>{angle.label}</span>
+                  <div className="detail-thumb-img-wrap">
+                    <img
+                      src={thumbUrl}
+                      alt={`${garment.name} ${angle.label} thumbnail`}
+                      loading="lazy"
+                      onError={(e) => {
+                        if (e.target.src !== garment.image) {
+                          e.target.src = garment.image
+                        }
+                      }}
+                    />
+                    {isSchematic && (
+                      <span className="thumb-schematic-badge" title="Atelier Studio Specification">
+                        SPEC
+                      </span>
                     )}
                   </div>
-                  <span>{angle.label}</span>
+                  <div className="thumb-label-row">
+                    <span className="thumb-label">{angle.label}</span>
+                    {isSelected && <span className="thumb-dot" aria-hidden="true">●</span>}
+                  </div>
                 </button>
               )
             })}
@@ -294,22 +311,24 @@ export function ProductDetailPage({ garment }) {
             </div>
           </div>
 
-          {/* VIEW FRONT & VIEW BACK Action Buttons (Matching Reference Design) */}
-          <div className="detail-action-buttons-row">
-            <button
-              type="button"
-              className={`detail-action-btn${activeAngle === 'front' ? ' is-active' : ''}`}
-              onClick={() => setActiveAngle('front')}
-            >
-              VIEW FRONT
-            </button>
-            <button
-              type="button"
-              className={`detail-action-btn${activeAngle === 'back' ? ' is-active' : ''}`}
-              onClick={() => setActiveAngle('back')}
-            >
-              VIEW BACK
-            </button>
+          {/* VIEW FRONT, BACK, LEFT, RIGHT Action Buttons (Synchronized with Gallery) */}
+          <div className="detail-option-group">
+            <div className="option-label-row">
+              <span className="option-label">SELECT VIEW ANGLE</span>
+              <strong className="option-val">{activeAngle.toUpperCase()} VIEW</strong>
+            </div>
+            <div className="detail-action-buttons-row">
+              {angles.map((ang) => (
+                <button
+                  key={ang.id}
+                  type="button"
+                  className={`detail-action-btn${activeAngle === ang.id ? ' is-active' : ''}`}
+                  onClick={() => setActiveAngle(ang.id)}
+                >
+                  {ang.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Technical Specifications Table */}

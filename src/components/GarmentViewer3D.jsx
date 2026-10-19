@@ -11,7 +11,7 @@ function CameraRig({ view = 'front', autoRotate = false, zoomLevel = 1.0 }) {
   const prevView = useRef(view)
 
   // Target coordinates for each view angle (optimized for prominent garment framing without clipping)
-  const targetCamPos = useRef(new THREE.Vector3(0, 0.0, 7.0))
+  const targetCamPos = useRef(new THREE.Vector3(0, 0.0, 6.0))
   const targetLookAt = useRef(new THREE.Vector3(0, 0.0, 0))
 
   useEffect(() => {
@@ -19,21 +19,21 @@ function CameraRig({ view = 'front', autoRotate = false, zoomLevel = 1.0 }) {
     prevView.current = view
     switch (view) {
       case 'front':
-        targetCamPos.current.set(0, 0.0, 7.0)
+        targetCamPos.current.set(0, 0.0, 6.0)
         break
       case 'back':
-        targetCamPos.current.set(0, 0.0, -7.0)
+        targetCamPos.current.set(0, 0.0, -6.0)
         break
       case 'left':
         // Inspect left sleeve graphics with comfortable framing
-        targetCamPos.current.set(-5.8, 0.0, 0)
+        targetCamPos.current.set(-5.0, 0.0, 0)
         break
       case 'right':
         // Inspect right sleeve graphics with comfortable framing
-        targetCamPos.current.set(5.8, 0.0, 0)
+        targetCamPos.current.set(5.0, 0.0, 0)
         break
       default:
-        targetCamPos.current.set(0, 0.0, 7.0)
+        targetCamPos.current.set(0, 0.0, 6.0)
     }
   }, [view])
 
@@ -102,7 +102,7 @@ export function GarmentViewer3D({
   garment,
   color,
   view = 'front',
-  scale = 0.84,
+  scale = 1.12,
   autoRotate = false,
   showWireframe = false,
   zoomLevel = 1.0,
@@ -119,7 +119,7 @@ export function GarmentViewer3D({
             />
           </div>
         }
-        camera={{ position: [0, 0.0, 7.0], fov: 38 }}
+        camera={{ position: [0, 0.0, 6.0], fov: 40 }}
         shadows
         dpr={[1, 1.75]}
         gl={{

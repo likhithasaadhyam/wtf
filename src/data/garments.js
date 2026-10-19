@@ -14,9 +14,172 @@ export const productColors = [
 
 export const sizes = ['XS', 'S', 'M', 'L', 'XL']
 
+
+export const garmentGalleries = {
+  'dark-luxury-01': {
+    front: '/assets/fashion/products/dark-luxury-01/front.webp',
+    back: '/assets/fashion/products/dark-luxury-01/back.webp',
+    left: '/assets/fashion/products/dark-luxury-01/left.webp',
+    right: '/assets/fashion/products/dark-luxury-01/right.webp',
+    thumbnails: [
+      '/assets/fashion/products/dark-luxury-01/front.webp',
+      '/assets/fashion/products/dark-luxury-01/back.webp',
+      '/assets/fashion/products/dark-luxury-01/left.webp',
+      '/assets/fashion/products/dark-luxury-01/right.webp',
+    ],
+    viewsStatus: {
+      front: 'verified',
+      back: 'verified',
+      left: 'verified',
+      right: 'verified',
+    },
+  },
+  'industrial-02': {
+    front: '/assets/fashion/products/industrial-02/front.webp',
+    back: '/assets/fashion/products/industrial-02/back.webp',
+    left: '/assets/fashion/products/industrial-02/left.webp',
+    right: '/assets/fashion/products/industrial-02/right.webp',
+    thumbnails: [
+      '/assets/fashion/products/industrial-02/front.webp',
+      '/assets/fashion/products/industrial-02/back.webp',
+      '/assets/fashion/products/industrial-02/left.webp',
+      '/assets/fashion/products/industrial-02/right.webp',
+    ],
+    viewsStatus: {
+      front: 'verified',
+      back: 'verified',
+      left: 'verified',
+      right: 'verified',
+    },
+  },
+  'minimal-03': {
+    front: '/assets/fashion/products/minimal-03/front.webp',
+    back: '/assets/fashion/products/minimal-03/back.webp',
+    left: '/assets/fashion/products/minimal-03/left.webp',
+    right: '/assets/fashion/products/minimal-03/right.webp',
+    thumbnails: [
+      '/assets/fashion/products/minimal-03/front.webp',
+      '/assets/fashion/products/minimal-03/back.webp',
+      '/assets/fashion/products/minimal-03/left.webp',
+      '/assets/fashion/products/minimal-03/right.webp',
+    ],
+    viewsStatus: {
+      front: 'verified',
+      back: 'verified',
+      left: 'verified',
+      right: 'verified',
+    },
+  },
+  'underground-04': {
+    front: '/assets/fashion/products/underground-04/front.webp',
+    back: '/assets/fashion/products/underground-04/back.webp',
+    left: '/assets/fashion/products/underground-04/left.webp',
+    right: '/assets/fashion/products/underground-04/right.webp',
+    thumbnails: [
+      '/assets/fashion/products/underground-04/front.webp',
+      '/assets/fashion/products/underground-04/back.webp',
+      '/assets/fashion/products/underground-04/left.webp',
+      '/assets/fashion/products/underground-04/right.webp',
+    ],
+    viewsStatus: {
+      front: 'verified',
+      back: 'verified',
+      left: 'verified',
+      right: 'verified',
+    },
+  },
+  'fracture-05': {
+    front: '/assets/fashion/products/fracture-05/front.webp',
+    back: '/assets/fashion/products/fracture-05/back.webp',
+    left: '/assets/fashion/products/fracture-05/left.webp',
+    right: '/assets/fashion/products/fracture-05/right.webp',
+    thumbnails: [
+      '/assets/fashion/products/fracture-05/front.webp',
+      '/assets/fashion/products/fracture-05/back.webp',
+      '/assets/fashion/products/fracture-05/left.webp',
+      '/assets/fashion/products/fracture-05/right.webp',
+    ],
+    viewsStatus: {
+      front: 'verified',
+      back: 'schematic',
+      left: 'schematic',
+      right: 'schematic',
+    },
+  },
+  'ritual-06': {
+    front: '/assets/fashion/products/ritual-06/front.webp',
+    back: '/assets/fashion/products/ritual-06/back.webp',
+    left: '/assets/fashion/products/ritual-06/left.webp',
+    right: '/assets/fashion/products/ritual-06/right.webp',
+    thumbnails: [
+      '/assets/fashion/products/ritual-06/front.webp',
+      '/assets/fashion/products/ritual-06/back.webp',
+      '/assets/fashion/products/ritual-06/left.webp',
+      '/assets/fashion/products/ritual-06/right.webp',
+    ],
+    viewsStatus: {
+      front: 'verified',
+      back: 'schematic',
+      left: 'schematic',
+      right: 'schematic',
+    },
+  },
+  'chaos-07': {
+    front: '/assets/fashion/products/chaos-07/front.webp',
+    back: '/assets/fashion/products/chaos-07/back.webp',
+    left: '/assets/fashion/products/chaos-07/left.webp',
+    right: '/assets/fashion/products/chaos-07/right.webp',
+    thumbnails: [
+      '/assets/fashion/products/chaos-07/front.webp',
+      '/assets/fashion/products/chaos-07/back.webp',
+      '/assets/fashion/products/chaos-07/left.webp',
+      '/assets/fashion/products/chaos-07/right.webp',
+    ],
+    viewsStatus: {
+      front: 'verified',
+      back: 'verified',
+      left: 'verified',
+      right: 'verified',
+    },
+  },
+  'ether-08': {
+    front: '/assets/fashion/products/ether-08/front.webp',
+    back: '/assets/fashion/products/ether-08/back.webp',
+    left: '/assets/fashion/products/ether-08/left.webp',
+    right: '/assets/fashion/products/ether-08/right.webp',
+    thumbnails: [
+      '/assets/fashion/products/ether-08/front.webp',
+      '/assets/fashion/products/ether-08/back.webp',
+      '/assets/fashion/products/ether-08/left.webp',
+      '/assets/fashion/products/ether-08/right.webp',
+    ],
+    viewsStatus: {
+      front: 'verified',
+      back: 'schematic',
+      left: 'schematic',
+      right: 'schematic',
+    },
+  },
+}
+
+export function getProductGallery(garment) {
+  if (garment && garment.gallery) return garment.gallery
+  if (garment && garmentGalleries[garment.id]) return garmentGalleries[garment.id]
+  const fallback = garment?.image || '/assets/fashion/collection/01_dark_luxury.webp'
+  return {
+    front: fallback,
+    back: fallback,
+    left: fallback,
+    right: fallback,
+    thumbnails: [fallback, fallback, fallback, fallback],
+    viewsStatus: { front: 'verified', back: 'fallback', left: 'fallback', right: 'fallback' },
+  }
+}
+
 export const garments = [
   {
     id: 'dark-luxury-01',
+    gallery: garmentGalleries['dark-luxury-01'],
     number: '01',
     name: '01. DARK LUXURY',
     collection: 'DARK LUXURY',
@@ -50,6 +213,7 @@ export const garments = [
   },
   {
     id: 'industrial-02',
+    gallery: garmentGalleries['industrial-02'],
     number: '02',
     name: '02. INDUSTRIAL',
     collection: 'INDUSTRIAL',
@@ -81,6 +245,7 @@ export const garments = [
   },
   {
     id: 'minimal-03',
+    gallery: garmentGalleries['minimal-03'],
     number: '03',
     name: '03. MINIMAL',
     collection: 'MINIMAL',
@@ -111,6 +276,7 @@ export const garments = [
   },
   {
     id: 'underground-04',
+    gallery: garmentGalleries['underground-04'],
     number: '04',
     name: '04. UNDERGROUND',
     collection: 'UNDERGROUND',
@@ -141,6 +307,7 @@ export const garments = [
   },
   {
     id: 'fracture-05',
+    gallery: garmentGalleries['fracture-05'],
     number: '05',
     name: '05. FRACTURE',
     collection: 'DARK LUXURY',
@@ -170,6 +337,7 @@ export const garments = [
   },
   {
     id: 'ritual-06',
+    gallery: garmentGalleries['ritual-06'],
     number: '06',
     name: '06. RITUAL',
     collection: 'INDUSTRIAL',
@@ -199,6 +367,7 @@ export const garments = [
   },
   {
     id: 'chaos-07',
+    gallery: garmentGalleries['chaos-07'],
     number: '07',
     name: '07. CHAOS',
     collection: 'UNDERGROUND',
@@ -228,6 +397,7 @@ export const garments = [
   },
   {
     id: 'ether-08',
+    gallery: garmentGalleries['ether-08'],
     number: '08',
     name: '08. ETHER',
     collection: 'MINIMAL',
