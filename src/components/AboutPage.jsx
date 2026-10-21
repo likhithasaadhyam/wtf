@@ -15,7 +15,7 @@ export function AboutPage() {
         <div className="about-visual-lead">
           <div className="about-model-card">
             <img
-              src="/assets/fashion/about/model_seated.webp"
+              src="/assets/fashion/about/about-fashion-portrait.png"
               alt="WTFBY Model seated wearing oversized streetwear"
               className="about-model-image"
               loading="lazy"
@@ -81,24 +81,24 @@ export function AboutPage() {
         <div className="about-stack-col">
           <div className="about-stack-card">
             <img
-              src="/assets/fashion/about/stack_1_neck.webp"
-              alt="WTFBY ribbed neck detail"
+              src="/assets/fashion/about/about-collar-detail.png"
+              alt="FBFY ribbed neck and collar detail"
               loading="lazy"
             />
             <span className="stack-caption">1x1 RIBBED COLLAR</span>
           </div>
           <div className="about-stack-card">
             <img
-              src="/assets/fashion/about/stack_2_back.webp"
-              alt="WTFBY back graphic artwork on model"
+              src="/assets/fashion/about/about-graphic-detail.png"
+              alt="WTFBY distressed screenprint graphic detail"
               loading="lazy"
             />
             <span className="stack-caption">PRESSURE IS A PRIVILEGE</span>
           </div>
           <div className="about-stack-card">
             <img
-              src="/assets/fashion/about/stack_3_perspective.webp"
-              alt="WTFBY model perspective editorial"
+              src="/assets/fashion/about/about-industrial-editorial.png"
+              alt="WTFBY brutalist industrial environment editorial"
               loading="lazy"
             />
             <span className="stack-caption">INDUSTRIAL PERSPECTIVE</span>

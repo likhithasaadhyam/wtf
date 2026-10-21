@@ -101,9 +101,9 @@ export const garmentGalleries = {
     ],
     viewsStatus: {
       front: 'verified',
-      back: 'schematic',
-      left: 'schematic',
-      right: 'schematic',
+      back: 'verified',
+      left: 'verified',
+      right: 'verified',
     },
   },
   'ritual-06': {
@@ -119,9 +119,9 @@ export const garmentGalleries = {
     ],
     viewsStatus: {
       front: 'verified',
-      back: 'schematic',
-      left: 'schematic',
-      right: 'schematic',
+      back: 'verified',
+      left: 'verified',
+      right: 'verified',
     },
   },
   'chaos-07': {
@@ -155,9 +155,9 @@ export const garmentGalleries = {
     ],
     viewsStatus: {
       front: 'verified',
-      back: 'schematic',
-      left: 'schematic',
-      right: 'schematic',
+      back: 'verified',
+      left: 'verified',
+      right: 'verified',
     },
   },
 }
@@ -432,28 +432,28 @@ export const studioCards = [
     id: 'neck-branding',
     title: 'NECK BRANDING',
     subtitle: 'Inside Print',
-    image: '/assets/fashion/studio/neck_branding.webp',
-    highRes: '/assets/fashion/studio/neck_branding.jpg',
+    image: '/assets/fashion/studio/neck-branding.png',
+    highRes: '/assets/fashion/studio/neck-branding.png',
     specs: ['1x1 Heavy Rib Knit', 'Screenprinted Heat Transfer', 'Twin-Needle Topstitch', 'Non-Stretch Neck Binding'],
     description:
-      'Close-up view of the inner neck label featuring clean WTFBY XL sizing print, laundry care icons, and "PREMIUM COTTON / MADE FOR HIGHER MINDS". Showcases 1x1 heavy cotton-spandex neck ribbing with twin-needle collar topstitching.',
+      'Close-up view of the inner neck label featuring clean FBFY XL sizing print, laundry care icons, and "100% HEAVY COTTON / MADE FOR HIGHER MINDS". Showcases 1x1 heavy cotton-spandex neck ribbing with twin-needle collar topstitching.',
   },
   {
     id: 'sleeve-left',
     title: 'SLEEVE CLOSEUP (LEFT)',
     subtitle: 'Graphic Print',
-    image: '/assets/fashion/studio/sleeve_left.webp',
-    highRes: '/assets/fashion/studio/sleeve_left.jpg',
+    image: '/assets/fashion/studio/left-sleeve.png',
+    highRes: '/assets/fashion/studio/left-sleeve.png',
     specs: ['Discharge Ink Screenprint', 'Tactile Texture Integration', 'Reinforced Underarm Seam', 'Distressed Mineral Finish'],
     description:
-      'Macro close-up of the left sleeve graphic showcasing tactile screenprint ink penetration into the washed cotton weave. Displays intersecting coordinate grid, wireframe radar target, and clean distressed WTFBY branding near the cuff.',
+      'Macro close-up of the left sleeve graphic showcasing tactile screenprint ink penetration into the washed cotton weave. Displays intersecting coordinate grid, wireframe radar target, and distressed graphic printing near the cuff.',
   },
   {
     id: 'sleeve-right',
     title: 'SLEEVE CLOSEUP (RIGHT)',
     subtitle: 'Built Under Pressure',
-    image: '/assets/fashion/studio/sleeve_right.webp',
-    highRes: '/assets/fashion/studio/sleeve_right.jpg',
+    image: '/assets/fashion/studio/right-sleeve.png',
+    highRes: '/assets/fashion/studio/right-sleeve.png',
     specs: ['High-Density Plastisol / Discharge', 'Vertical Bounding Box Architecture', 'Twin-Needle Cuff Fold', 'Heavy Slub Drape'],
     description:
       'Close-up of the right sleeve featuring the bold boxed "BUILT UNDER PRESSURE" screenprint artwork. Preserves authentic vertical typography orientation, heavy distress texture, and double-needle cuff seam stitching.',
@@ -462,7 +462,7 @@ export const studioCards = [
     id: 'stitching',
     title: 'STITCHING',
     subtitle: 'Seam Detail',
-    image: '/assets/fashion/studio/stitching.webp',
+    image: '/assets/fashion/studio/stitching.png',
     highRes: '/assets/fashion/studio/stitching.png',
     specs: ['6mm Parallel Twin-Needle', '4-Thread Overlock Reinforcement', 'Mercerized Poly-Core Thread', 'Anti-Fray Bindings'],
     description:
@@ -472,8 +472,8 @@ export const studioCards = [
     id: 'hem-signature',
     title: 'HEM SIGNATURE',
     subtitle: 'by FBFY',
-    image: '/assets/fashion/studio/hem_signature.webp',
-    highRes: '/assets/fashion/studio/hem_signature.jpg',
+    image: '/assets/fashion/studio/hem-signature.png',
+    highRes: '/assets/fashion/studio/hem-signature.png',
     specs: ['Twin-Needle 6mm Spacing', '2.5cm Blind Folded Hem', 'Clean Script Screenprint', 'Washed Slub Border'],
     description:
       'Macro view of the bottom hem welt featuring the authentic "by FBFY" signature and four-point star emblem. Demonstrates heavy 2.5cm folded hem with parallel double-needle lockstitching.',
@@ -482,8 +482,8 @@ export const studioCards = [
     id: 'print-texture',
     title: 'PRINT TEXTURE',
     subtitle: 'Distressed Graphic',
-    image: '/assets/fashion/studio/print_texture.webp',
-    highRes: '/assets/fashion/studio/print_texture.png',
+    image: '/assets/fashion/studio/print-texture.png',
+    highRes: '/assets/fashion/studio/print-texture.png',
     specs: ['Water-Based Discharge Ink', 'Raw Cotton Fiber Penetration', 'Crackle Patina Finish', 'Zero Surface Build'],
     description:
       'Ultra close-up of the radial ink bloom displaying zero-hand feel discharge printing that dyes the cotton fibers directly rather than leaving rubbery plastic atop the garment.',
@@ -492,8 +492,8 @@ export const studioCards = [
     id: 'fabric-texture',
     title: 'FABRIC TEXTURE',
     subtitle: 'Washed Cotton',
-    image: '/assets/fashion/studio/fabric_texture.webp',
-    highRes: '/assets/fashion/studio/fabric_texture.jpg',
+    image: '/assets/fashion/studio/fabric-texture.png',
+    highRes: '/assets/fashion/studio/fabric-texture.png',
     specs: ['220–260 GSM Heavyweight Cotton', 'Natural Slub Yarn Texture', 'Enzyme & Mineral Wash', 'Breathable Combed Weave'],
     description:
       'Ultra macro view of the 220–260 GSM heavy cotton fabric. Highlights the uneven slub yarn texture, micro-fiber surface fuzz, natural shadowing across garment folds, and rich reactive-dye enzyme wash fading.',
@@ -502,11 +502,11 @@ export const studioCards = [
     id: 'shape',
     title: 'SHAPE',
     subtitle: 'Oversized Silhouette',
-    image: '/assets/fashion/studio/shape_oversized.webp',
-    highRes: '/assets/fashion/studio/shape_oversized.jpg',
+    image: '/assets/fashion/studio/oversized-shape.png',
+    highRes: '/assets/fashion/studio/oversized-shape.png',
     specs: ['Oversized Drop Shoulder Fit', 'Wide Hanging Long Sleeves', '220–260 GSM Heavy Drape', 'Unisex Engineered Pattern'],
     description:
-      'Flat garment architecture showing dropped shoulders, relaxed boxy torso width, wide hanging sleeves, and deep bottom hem welt.',
+      'Lookbook dual-view showing dropped shoulders, relaxed boxy torso width, wide hanging sleeves, and deep bottom hem welt on male streetwear model.',
   },
 ]
 

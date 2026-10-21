@@ -1,23 +1,13 @@
 import { useState } from 'react'
 import { productColors, garments, getProductGallery } from '../data/garments'
-import { GarmentViewer3D } from './GarmentViewer3D'
 import { ProductCard } from './ProductCard'
 
 export function ProductDetailPage({ garment }) {
   const [selectedColor, setSelectedColor] = useState(garment.defaultColor || garment.colors[0])
   const [selectedSize, setSelectedSize] = useState('M')
   const [activeAngle, setActiveAngle] = useState('front')
-  const [mode, setMode] = useState('gallery') // Default to Lookbook Gallery on Product Detail Page
-  const [autoRotate, setAutoRotate] = useState(false)
-  const [zoom, setZoom] = useState(1.0)
-  const [wireframe, setWireframe] = useState(false)
-
-
 
   const gallery = getProductGallery(garment)
-
-  const activeColorHex =
-    productColors.find((c) => c.name === selectedColor)?.value || '#24262a'
 
   const angles = [
     { id: 'front', label: 'FRONT', desc: 'Chest Emblem & Front View' },
@@ -61,21 +51,10 @@ export function ProductDetailPage({ garment }) {
         <a className="detail-back-link" href="#collection">
           ← BACK TO COLLECTION
         </a>
-        <div className="detail-mode-toggle" role="group" aria-label="Viewer Mode">
-          <button
-            type="button"
-            className={`mode-btn${mode === 'gallery' ? ' is-active' : ''}`}
-            onClick={() => setMode('gallery')}
-          >
+        <div className="detail-mode-toggle">
+          <span className="mode-btn is-active">
             LOOKBOOK GALLERY
-          </button>
-          <button
-            type="button"
-            className={`mode-btn${mode === '3d' ? ' is-active' : ''}`}
-            onClick={() => setMode('3d')}
-          >
-            INTERACTIVE 3D
-          </button>
+          </span>
         </div>
       </div>
 
@@ -94,95 +73,36 @@ export function ProductDetailPage({ garment }) {
               ←
             </button>
 
-            {/* Central Stage Display */}
-            {mode === 'gallery' ? (
-              <div className="detail-photo-container">
-                <img
-                  key={`${garment.id}-${activeAngle}`}
-                  src={currentViewImage}
-                  alt={`${garment.name} ${activeAngle.toUpperCase()} view`}
-                  className="detail-photo-main"
-                  onError={(e) => {
-                    // Graceful fallback to verified primary image if specific view fails
-                    if (e.target.src !== garment.image) {
-                      e.target.src = garment.image
-                    }
-                  }}
-                />
+            {/* Central Stage Display: Editorial Lookbook Gallery */}
+            <div className="detail-photo-container">
+              <img
+                key={`${garment.id}-${activeAngle}`}
+                src={currentViewImage}
+                alt={`${garment.name} ${activeAngle.toUpperCase()} view`}
+                className="detail-photo-main"
+                onError={(e) => {
+                  // Graceful fallback to verified primary image if specific view fails
+                  if (e.target.src !== garment.image) {
+                    e.target.src = garment.image
+                  }
+                }}
+              />
 
-                {/* View Badge: Informs user if this angle is an Atelier Schematic */}
-                {isSchematicView && (
-                  <div className="detail-schematic-pill">
-                    <span className="schematic-pill__indicator">●</span>
-                    <span>ATELIER ARCHIVE SCHEMATIC // TECHNICAL BLUEPRINT</span>
-                  </div>
-                )}
+              {/* View Badge: Informs user if this angle is an Atelier Schematic */}
+              {isSchematicView && (
+                <div className="detail-schematic-pill">
+                  <span className="schematic-pill__indicator">●</span>
+                  <span>ATELIER ARCHIVE SCHEMATIC // TECHNICAL BLUEPRINT</span>
+                </div>
+              )}
 
-                {/* Bottom Caption Overlay */}
-                <div className="detail-photo-caption">
-                  <span className="caption-garment">{garment.name}</span>
-                  <span className="caption-angle">// {activeAngle.toUpperCase()} VIEW</span>
-                  <span className="caption-color">// {selectedColor.toUpperCase()}</span>
-                </div>
+              {/* Bottom Caption Overlay */}
+              <div className="detail-photo-caption">
+                <span className="caption-garment">{garment.name}</span>
+                <span className="caption-angle">// {activeAngle.toUpperCase()} VIEW</span>
+                <span className="caption-color">// {selectedColor.toUpperCase()}</span>
               </div>
-            ) : (
-              <div className="detail-canvas-container">
-                <GarmentViewer3D
-                  garment={garment}
-                  color={activeColorHex}
-                  view={activeAngle}
-                  onViewChange={setActiveAngle}
-                  scale={1.12}
-                  autoRotate={autoRotate}
-                  showWireframe={wireframe}
-                  zoomLevel={zoom}
-                />
-                <div className="stage-utility-hud">
-                  <button
-                    type="button"
-                    className={`hud-btn${autoRotate ? ' is-active' : ''}`}
-                    onClick={() => setAutoRotate((prev) => !prev)}
-                    title="Toggle 360 Auto-Rotation"
-                  >
-                    360° SPIN
-                  </button>
-                  <button
-                    type="button"
-                    className={`hud-btn${wireframe ? ' is-active' : ''}`}
-                    onClick={() => setWireframe((prev) => !prev)}
-                    title="Toggle Wireframe Mesh"
-                  >
-                    WIREFRAME
-                  </button>
-                  <button
-                    type="button"
-                    className="hud-btn"
-                    onClick={() => setZoom((z) => Math.min(Number((z + 0.2).toFixed(2)), 1.8))}
-                    title="Zoom in on garment details"
-                  >
-                    + ZOOM
-                  </button>
-                  <button
-                    type="button"
-                    className="hud-btn"
-                    onClick={() => setZoom((z) => Math.max(Number((z - 0.2).toFixed(2)), 0.7))}
-                    title="Zoom out"
-                  >
-                    − ZOOM
-                  </button>
-                  {zoom !== 1.0 && (
-                    <button
-                      type="button"
-                      className="hud-btn"
-                      onClick={() => setZoom(1.0)}
-                      title="Reset default zoom"
-                    >
-                      RESET
-                    </button>
-                  )}
-                </div>
-              </div>
-            )}
+            </div>
 
             {/* Right Nav Arrow */}
             <button
